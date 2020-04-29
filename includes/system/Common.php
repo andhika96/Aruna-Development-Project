@@ -99,7 +99,14 @@
 	 * Untuk mendeteksi class yang ada didalam berkas modul ada atau tidak.
 	 */
 
-	spl_autoload_register(function ($params) 
+	// Since the default file extensions are searched
+	// in order of .inc then .php, but we always use .php,
+	// put the .php extension first to eek out a bit
+	// better performance.
+	// http://php.net/manual/en/function.spl-autoload.php#78053
+	spl_autoload_extensions('.php, .inc');
+
+	spl_autoload_register(function($params) 
 	{
 	    $path = 'modules/'.$params.'/'.$params.'.php';
 
@@ -112,7 +119,10 @@
 	    		show_error('Non-existent class: '.$params);
 	    	}
 	    }
-	});
+	},
+	true, // Throw exception
+	true // Prepend
+	);
 
 	// ------------------------------------------------------------------------
 
@@ -173,6 +183,27 @@
 		{
 			$load_class =& load_class('Loader', 'system');
 			$access_class = $load_class->init_extend_view($theme, $part);
+
+			return $access_class;
+		}
+	}
+
+	// ------------------------------------------------------------------------
+
+	if ( ! function_exists('view'))
+	{
+
+		/**
+		 * Load Extend View
+		 *
+		 * Berfungsi untuk memuat tampilan antarmuka kedua dari tampilan antarmuka utama
+		 * fungsi ini hanya berfungsi dengan sempurna jika diletakkan di modul
+		 */
+
+		function view($view, $vars = array(), $return = FALSE)
+		{
+			$load_class =& load_class('Loader', 'system');
+			$access_class = $load_class->load_view($view, $vars, $return);
 
 			return $access_class;
 		}

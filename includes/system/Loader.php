@@ -17,6 +17,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ARUNA_Loader {
 
+	// All these are set automatically. Don't mess with them.
+	/**
+	 * Nesting level of the output buffering mechanism
+	 *
+	 * @var	int
+	 */
+
+	protected $_ar_ob_level;
+
+	/**
+	 * List of cached variables
+	 *
+	 * @var	array
+	 */
+	protected $_ar_cached_vars = array();
+
+	/**
+	 * List of paths to load views from
+	 *
+	 * @var	array
+	 */
+
+	protected $_ar_view_paths =	array(VIEWPATH => TRUE);
+
 	/**
 	 * List of paths to load libraries from
 	 *
@@ -71,6 +95,8 @@ class ARUNA_Loader {
 
 	public function __construct()
 	{
+		$this->_ar_ob_level = ob_get_level();
+
 		log_message('info', 'Loader Class Initialized');
 	}
 
@@ -204,6 +230,149 @@ class ARUNA_Loader {
 		}
 
 		return $this;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * View Loader
+	 *
+	 * Loads "view" files.
+	 *
+	 * @param	string	$view	View name
+	 * @param	array	$vars	An associative array of data
+	 *				to be extracted for use in the view
+	 * @param	bool	$return	Whether to return the view output
+	 *				or leave it to the Output class
+	 * @return	object|string
+	 */
+	
+	public function load_view($view, $vars = array(), $return = FALSE)
+	{
+		return $this->_ar_load(array('_ar_view' => $view, '_ar_vars' => $this->_ar_prepare_view_vars($vars), '_ar_return' => $return));
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Internal AR Data Loader
+	 *
+	 * Used to load views and files.
+	 *
+	 * Variables are prefixed with _ar_ to avoid symbol collision with
+	 * variables made available to view files.
+	 *
+	 * @used-by	AR_Loader::load_view()
+	 * @param	array	$_ar_data	Data to load
+	 * @return	object
+	 */
+
+	protected function _ar_load($_ar_data)
+	{
+		// Set the default data variables
+		foreach (array('_ar_view', '_ar_vars', '_ar_path', '_ar_return') as $_ar_val)
+		{
+			$$_ar_val = isset($_ar_data[$_ar_val]) ? $_ar_data[$_ar_val] : FALSE;
+		}
+
+		$file_exists = FALSE;
+
+		// Set the path to the requested file
+		if (is_string($_ar_path) && $_ar_path !== '')
+		{
+			$_ar_x = explode('/', $_ar_path);
+			$_ar_file = end($_ar_x);
+		}
+		else
+		{
+			$_ar_ext = pathinfo($_ar_view, PATHINFO_EXTENSION);
+			$_ar_file = ($_ar_ext === '') ? $_ar_view.'.php' : $_ar_view;
+
+			foreach ($this->_ar_view_paths as $_ar_view_file => $cascade)
+			{
+				if (file_exists($_ar_view_file.$_ar_file))
+				{
+					$_ar_path = $_ar_view_file.$_ar_file;
+					$file_exists = TRUE;
+					break;
+				}
+
+				if ( ! $cascade)
+				{
+					break;
+				}
+			}
+		}
+
+		if ( ! $file_exists && ! file_exists($_ar_path))
+		{
+			show_error('Unable to load the requested file: '.$_ar_file);
+		}
+
+		/*
+		 * Extract variables
+		 *
+		 * You can either set variables using the dedicated $this->load->vars()
+		 * function or via the second parameter of this function. We'll merge
+		 * the two types and cache them so that views that are embedded within
+		 * other views can have access to these variables.
+		 */
+
+		extract($_ar_vars);
+
+		// Return the file data if requested
+		if ($_ar_return === TRUE)
+		{
+			return $this;
+		}
+
+		// If the PHP installation does not support short tags we'll
+		// do a little string replacement, changing the short tags
+		// to standard PHP echo statements.
+		if ( ! is_php('5.4') && ! ini_get('short_open_tag') && config_item('rewrite_short_tags') === TRUE)
+		{
+			echo eval('?>'.preg_replace('/;*\s*\?>/', '; ?>', str_replace('<?=', '<?php echo ', file_get_contents($_ar_path))));
+		}
+		else
+		{
+			include($_ar_path); // include() vs include_once() allows for multiple views with the same name
+		}
+
+		log_message('info', 'File loaded: '.$_ar_path);
+
+		return $this;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Prepare variables for _ar_vars, to be later extract()-ed inside views
+	 *
+	 * Converts objects to associative arrays and filters-out internal
+	 * variable names (i.e. keys prefixed with '_ar_').
+	 *
+	 * @param	mixed	$vars
+	 * @return	array
+	 */
+	
+	public function _ar_prepare_view_vars($vars)
+	{
+		if ( ! is_array($vars))
+		{
+			$vars = is_object($vars)
+				? get_object_vars($vars)
+				: array();
+		}
+
+		foreach (array_keys($vars) as $key)
+		{
+			if (strncmp($key, '_ar_', 4) === 0)
+			{
+				unset($vars[$key]);
+			}
+		}
+
+		return $vars;
 	}
 
 	// --------------------------------------------------------------------
