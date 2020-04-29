@@ -1,0 +1,56 @@
+body 
+{
+	background-color: #039be5 !important;
+}
+
+.ar-default-homepage 
+{
+	padding: 4rem 5rem;
+	border-radius: .6rem;
+	border: 1px #fff solid;
+}
+
+@media (max-width: 575.98px) 
+{
+	.ar-default-homepage 
+	{
+		padding: 1.5rem 2rem;
+	}
+}
+
+pre
+{
+	color: #c7c7c7 !important;
+}
+
+.source 
+{
+	background: #333;
+	color: #c7c7c7 !important;
+	padding: 0.5em 1em;
+	border-radius: 5px;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	margin: 0;
+}
+
+.source span.line 
+{
+	line-height: 1.4;
+}
+
+.source span.line .number 
+{
+	color: #666;
+}
+
+.source .line .highlight 
+{
+	display: block;
+	background: #555;
+	color: #fff;
+}
+
+.source span.highlight .number 
+{
+	color: #fff;
+}
