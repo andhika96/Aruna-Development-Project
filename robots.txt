@@ -1,0 +1,8 @@
+User-agent: *
+Crawl-delay: 10
+Disallow: /app/
+Disallow: /assets/
+Disallow: /contents/
+Disallow: /modules/
+Disallow: /includes/
+Disallow: /themes/
