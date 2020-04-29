@@ -263,6 +263,8 @@
 
 	$class_name = FALSE;
 
+	define('VIEWPATH', 'modules/'.$parr[1].'/views/');
+
 	if (file_exists('modules/'.$parr[1].'/'.$parr[1].'.php')) 
 	{
 		$class_name = $parr[1];
