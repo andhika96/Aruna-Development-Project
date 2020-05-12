@@ -61,6 +61,16 @@
 		$module_path = 'modules';
 
 	/*
+	 *---------------------------------------------------------------
+	 * THEMES DIRECTORY NAME
+	 *---------------------------------------------------------------
+	 *
+	 * Default theme directory by Aruna Development Project
+	 */
+
+		$themes_path = 'themes';
+
+	/*
 	 * ---------------------------------------------------------------
 	 *  Resolve the system path for increased reliability
  	 * ---------------------------------------------------------------
@@ -105,6 +115,9 @@
 
 	// Path to the includes directory
 	define('BASEPATH', $includes_path);
+
+	// Path to the theme directory
+	define('THEMEPATH', $themes_path);
 
 	// Path to the modules directory
 	define('MODULEPATH', $module_path.DIRECTORY_SEPARATOR);

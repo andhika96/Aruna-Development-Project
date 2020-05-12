@@ -13,11 +13,23 @@
 			<!-- Bootstrap CSS -->
 			<link rel="stylesheet" href="'.base_url('assets/plugins/bootstrap/4.4.1/css/bootstrap.min.css').'">
 
-			<!-- Font Lato CSS -->
-			<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+			<!-- Custom Font CSS -->
+			<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet"> 
 
 			<!-- Custom CSS -->
-			<link rel="stylesheet" href="'.base_url('assets/css/aruna.css').'">
+			<style>
+			body 
+			{
+				margin: 0;
+				font-family: \'Lato\', -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.5;
+				color: #212529;
+				text-align: left;
+				background-color: #fff;
+			}
+			</style>
 
 			<title>404 Page Not Found</title>
 		</head>
@@ -47,7 +59,7 @@
 
 			<!-- Optional JavaScript -->
 			<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-			<script src="'.base_url('assets/js/jquery-3.5.0.min.js').'"></script>
+			<script src="'.base_url('assets/js/jquery-3.4.1.min.js').'"></script>
 			<script src="'.base_url('assets/js/popper.min.js').'"></script>
 			<script src="'.base_url('assets/plugins/bootstrap/4.4.1/js/bootstrap.min.js').'"></script>
 			<script src="'.base_url('assets/plugins/fontawesome/5.13.0/js/all.min.js').'"></script>
