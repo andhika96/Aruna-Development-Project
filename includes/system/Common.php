@@ -1293,6 +1293,7 @@
 				}
 			}
 
+			$output .= get_data_global('view_content');
 			$output .= get_data_global('section_footer');
 
 			$GLOBALS['app_content'] .= $output;
@@ -1381,7 +1382,7 @@
 		 */
 
 		function display_application_content()
-		{
+		{	
 			set_ob_start($GLOBALS['app_content']);
 		}
 	}

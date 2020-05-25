@@ -270,7 +270,6 @@ class ARUNA_Security {
 			$this->_csrf_hash = NULL;
 		}
 
-		//this->set_form_csrf();
 		$this->_csrf_set_hash();
 		$this->csrf_set_cookie();
 

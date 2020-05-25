@@ -30,6 +30,14 @@ class ARUNA_Database {
 
 	private $dbtype = NULL;
 
+	/**
+	 * Result Object
+	 *
+	 * @var	object[]
+	 */
+
+	public $result_object = array();
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -41,7 +49,6 @@ class ARUNA_Database {
 
 	function __construct(string $active_group = '') 
 	{
-
 		if ( ! file_exists($file_path = BASEPATH.'config/database.php')) 
 		{
 			show_error('The configuration file database.php does not exist.');
@@ -355,6 +362,31 @@ class ARUNA_Database {
 			default;
 				break;
 		}
+	}
+
+	public function sql_result(&$res, $type = 'array')
+	{
+		if (count($this->result_object) > 0)
+		{
+			return $this->result_object;
+		}
+
+		if ($type === 'array')
+		{
+			while ($row = $this->sql_fetch_array($res))
+			{
+				$this->result_object[] = $row;
+			}
+		}
+		elseif ($type === 'object')
+		{
+			while ($row = $this->sql_fetch_array($res, PDO::FETCH_OBJ))
+			{
+				$this->result_object[] = $row;
+			}
+		}
+
+		return $this->result_object;
 	}
 
 	/**

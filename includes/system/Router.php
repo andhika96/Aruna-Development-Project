@@ -155,7 +155,7 @@ class ARUNA_Router {
 					$this->segments[0] = $value;
 				}
 				
-				// return;
+				return;
 			}
 		}
 	}

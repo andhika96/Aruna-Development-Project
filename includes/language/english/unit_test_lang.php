@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -35,6 +36,7 @@
  * @since	Version 1.0.0
  * @filesource
  */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang['ut_test_name'] = 'Test Name';
@@ -56,3 +58,5 @@ $lang['ut_object'] = 'Object';
 $lang['ut_resource'] = 'Resource';
 $lang['ut_null'] = 'Null';
 $lang['ut_notes'] = 'Notes';
+
+?>

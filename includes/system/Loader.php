@@ -335,7 +335,12 @@ class ARUNA_Loader {
 		}
 		else
 		{
+			ob_start();
 			include($_ar_path); // include() vs include_once() allows for multiple views with the same name
+			$output = ob_get_contents();
+			@ob_end_clean();
+
+			$GLOBALS['view_content'] = $output;			
 		}
 
 		log_message('info', 'File loaded: '.$_ar_path);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -35,22 +36,23 @@
  * @since	Version 1.0.0
  * @filesource
  */
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$lang['date_year'] = 'Year';
-$lang['date_years'] = 'Years';
-$lang['date_month'] = 'Month';
-$lang['date_months'] = 'Months';
-$lang['date_week'] = 'Week';
-$lang['date_weeks'] = 'Weeks';
-$lang['date_day'] = 'Day';
-$lang['date_days'] = 'Days';
-$lang['date_hour'] = 'Hour';
-$lang['date_hours'] = 'Hours';
-$lang['date_minute'] = 'Minute';
-$lang['date_minutes'] = 'Minutes';
-$lang['date_second'] = 'Second';
-$lang['date_seconds'] = 'Seconds';
+$lang['date_year'] 		= 'Year';
+$lang['date_years'] 	= 'Years';
+$lang['date_month'] 	= 'Month';
+$lang['date_months'] 	= 'Months';
+$lang['date_week'] 		= 'Week';
+$lang['date_weeks'] 	= 'Weeks';
+$lang['date_day'] 		= 'Day';
+$lang['date_days'] 		= 'Days';
+$lang['date_hour'] 		= 'Hour';
+$lang['date_hours'] 	= 'Hours';
+$lang['date_minute'] 	= 'Minute';
+$lang['date_minutes'] 	= 'Minutes';
+$lang['date_second'] 	= 'Second';
+$lang['date_seconds'] 	= 'Seconds';
 
 $lang['UM12']	= '(UTC -12:00) Baker/Howland Island';
 $lang['UM11']	= '(UTC -11:00) Niue';
@@ -92,3 +94,5 @@ $lang['UP12']	= '(UTC +12:00) Fiji, Gilbert Islands, Kamchatka Time, New Zealand
 $lang['UP1275']	= '(UTC +12:45) Chatham Islands Standard Time';
 $lang['UP13']	= '(UTC +13:00) Samoa Time Zone, Phoenix Islands Time, Tonga';
 $lang['UP14']	= '(UTC +14:00) Line Islands';
+
+?>
