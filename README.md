@@ -5,13 +5,13 @@ Aruna Development Project adalah sebuah aplikasi framework PHP untuk membuat apl
 
 **Beberapa fitur yang disediakan:**
 
-* Beberapa perpustakaan yang dibutuhkan seperti Session, Security, dsb.
+* Perpusatakaan yang dibutuhkan seperti Security, Session, Database, Input, dsb.
 
-* Struktur Templating
+* Struktur Templating.
 
-* Konsep MVC dan All-in-one MVC
+* Konsep pattern MVC dan All-in-one MVC.
 
-* dan beberapa fitur lainnya.
+* Dan beberapa fitur lainnya.
 
   
 
