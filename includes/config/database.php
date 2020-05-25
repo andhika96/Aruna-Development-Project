@@ -12,32 +12,12 @@
 
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	/*
 	$db['default'] = [
 		'host' 		=> 'localhost', 
 		'user' 		=> 'root', 
 		'password' 	=> '', 
 		'dbtype' 	=> 'MySQL', 
 		'dbname' 	=> '',
-		'charset'	=> 'utf8'
-	];
-	*/
-
-	$db['default'] = [
-		'host' 		=> 'localhost', 
-		'user' 		=> 'root', 
-		'password' 	=> '', 
-		'dbtype' 	=> 'MySQL', 
-		'dbname' 	=> 'p09_ardev4',
-		'charset'	=> 'utf8mb4'
-	];
-
-	$db['default2'] = [
-		'host' 		=> 'ANDHIKA-ARUNA\SHANIASQL', 
-		'user' 		=> 'ShaniaSQL', 
-		'password' 	=> 'shania1906', 
-		'dbtype' 	=> 'SQLSRV', 
-		'dbname' 	=> 'p01_ardev4',
 		'charset'	=> 'utf8'
 	];
 
