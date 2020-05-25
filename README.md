@@ -14,7 +14,7 @@ Aruna Development Project adalah sebuah aplikasi framework PHP untuk membuat apl
 
 **Siapa yang membutuhkan Framework ini:**
 
-* Anda menginginkan kerangka kerja yang membutuhkan konfigurasi hampir nol.
+* Anda menginginkan framework yang membutuhkan konfigurasi hampir nol.
 * Anda ingin framework dengan "small footprint".
 * Yang menginginkan kesederhanaan dalam pembuatan dan pengembangan aplikasi.
 * Anda membutuhkan kinerja atau performa yang luar biasa.
