@@ -1,7 +1,7 @@
 # Aruna-Development-Project
 Aruna Development Project adalah sebuah aplikasi framework PHP untuk membuat aplikasi website personal maupun yang lainnya, tujuan dibuatnya framework (kerangka kerja) ini untuk memudahkan dan mempercepat pembuatan dan pengembangan aplikasi website dan framework ini ditulis dalam bahasa program PHP. Framework ini dibuat dengan memadukan dua aplikasi perangkat lunak, yakni CMS Jcow Social Network dan Perpustakaan serta Helper milik Framework CodeIgniter.
 
-
+<br/><br/>
 
 **Beberapa fitur yang disediakan:**
 
@@ -10,7 +10,7 @@ Aruna Development Project adalah sebuah aplikasi framework PHP untuk membuat apl
 * Konsep pattern MVC dan All-in-one MVC.
 * Dan beberapa fitur lainnya.
 
-
+<br/><br/>
 
 **Siapa yang membutuhkan Framework ini:**
 
