@@ -2,15 +2,25 @@
 
 	/*
 	 *	Aruna Development Project
+<<<<<<< HEAD
 	 *	Codename: Aruna Personal Site
 	 *	Source: Based on Sosiaku Social Networking Software and CodeIgniter Framework PHP
 	 *	Website: https://www.aruna-dev.com
 	 *	Created and developed by Andhika Adhitia N
 	 *	Copyright 2022
+=======
+	 *	IS NOT FREE SOFTWARE
+	 *	Codename: Aruna Personal Site
+	 *	Source: Based on Sosiaku Social Networking Software
+	 *	Website: https://www.sosiaku.gq
+	 *	Website: https://www.aruna-dev.id
+	 *	Created and developed by Andhika Adhitia N
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 	 */
 
 	/*
 	 *---------------------------------------------------------------
+<<<<<<< HEAD
 	 * APPLICATION ENVIRONMENT
 	 *---------------------------------------------------------------
 	 *
@@ -67,6 +77,8 @@
 
 	/*
 	 *---------------------------------------------------------------
+=======
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 	 * SYSTEM DIRECTORY NAME
 	 *---------------------------------------------------------------
 	 *
@@ -91,6 +103,7 @@
 	 * NO TRAILING SLASH!
 	 */
 
+<<<<<<< HEAD
 		$application_folder = 'application';
 
 	/*
@@ -103,6 +116,20 @@
 	 */
 
 		$aruna_path = 'aruna';
+=======
+		$application_folder = 'app';
+
+	/*
+	 *---------------------------------------------------------------
+	 * INCLUDES DIRECTORY NAME
+	 *---------------------------------------------------------------
+	 *
+	 * This variable must contain the name of your "includes" directory.
+	 * Set the path if it is not in the same directory as this file.
+	 */
+
+		$includes_path = 'includes';
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 
 	/*
 	 *---------------------------------------------------------------
@@ -137,22 +164,37 @@
 		chdir(dirname(__FILE__));
 	}
 
+<<<<<<< HEAD
 	if (($_temp = realpath($aruna_path)) !== FALSE)
 	{
 		$aruna_path = $_temp.DIRECTORY_SEPARATOR;
+=======
+	if (($_temp = realpath($includes_path)) !== FALSE)
+	{
+		$includes_path = $_temp.DIRECTORY_SEPARATOR;
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 	}
 	else
 	{
 		// Ensure there's a trailing slash
+<<<<<<< HEAD
 		$aruna_path = strtr(
 			rtrim($aruna_path, '/\\'),
+=======
+		$includes_path = strtr(
+			rtrim($includes_path, '/\\'),
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 			'/\\',
 			DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR
 		).DIRECTORY_SEPARATOR;
 	}
 
 	// Is the system path correct?
+<<<<<<< HEAD
 	if ( ! is_dir($aruna_path))
+=======
+	if ( ! is_dir($includes_path))
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 	{
 		header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
 		echo 'Your includes folder path does not appear to be set correctly. Please open the following file and correct this: '.pathinfo(__FILE__, PATHINFO_BASENAME);
@@ -169,7 +211,11 @@
 	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 	// Path to the includes directory
+<<<<<<< HEAD
 	define('BASEPATH', $aruna_path);
+=======
+	define('BASEPATH', $includes_path);
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 
 	// Path to the theme directory
 	define('THEMEPATH', $themes_path);
@@ -210,7 +256,20 @@
 
 	define('APPPATH', $application_folder.DIRECTORY_SEPARATOR);
 
+<<<<<<< HEAD
 	include './aruna/system/Aruna.php';
+=======
+	function microtime_float() 
+	{
+		list($usec, $sec) = explode(" ", microtime());
+		return ((float)$usec + (float)$sec);
+	}
+
+	$time_start = microtime_float();
+
+	// Load for System URL
+	include './includes/system/Aruna.php';
+>>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 
 	// Load theme structure
 	display_content();
