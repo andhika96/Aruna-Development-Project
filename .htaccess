@@ -16,11 +16,7 @@ Options All -Indexes
 	RewriteCond %{REQUEST_FILENAME} !-d
 
 	# To append a query string part in the substitution string
-<<<<<<< HEAD
 	RewriteRule ^(.*)$ index.php/$1 [QSA]
-=======
-	RewriteRule ^(.*)$ index.php\?p=$1 [QSA]
->>>>>>> 1386a17d022721e68cfb6c08b18317e8f983f207
 
 	# Ensure Authorization header is passed along
 	RewriteCond %{HTTP:Authorization} .
