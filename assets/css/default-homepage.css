@@ -1,6 +1,10 @@
 body 
 {
-	background-color: #00a0b0 !important;
+	background: hsla(185, 100%, 35%, 1);
+	background: linear-gradient(0deg, hsla(185, 100%, 35%, 1) 10%, hsla(0, 100%, 65%, 1) 100%);
+	background: -moz-linear-gradient(0deg, hsla(185, 100%, 35%, 1) 10%, hsla(0, 100%, 65%, 1) 100%);
+	background: -webkit-linear-gradient(0deg, hsla(185, 100%, 35%, 1) 10%, hsla(0, 100%, 65%, 1) 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#00a0b0", endColorstr="#ff4c4c", GradientType=1 );
 }
 
 .ar-default-homepage 
