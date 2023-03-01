@@ -1,5 +1,7 @@
 <?php
 
+#[\AllowDynamicProperties]
+
 class Aruna_Controller 
 {
 	/**

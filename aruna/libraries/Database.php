@@ -12,6 +12,8 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+#[\AllowDynamicProperties]
+
 class ARUNA_Database {
 
 	/**

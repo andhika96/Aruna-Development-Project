@@ -16,6 +16,8 @@ include BASEPATH.'libraries/Uuid/vendor/autoload.php';
 
 use Ramsey\Uuid\Uuid;
 
+#[\AllowDynamicProperties]
+
 class ARUNA_Uuid {
 
 	public function v1()

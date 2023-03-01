@@ -49,6 +49,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		https://codeigniter.com/user_guide/database/
  */
 
+#[\AllowDynamicProperties]
+
 abstract class CI_DB_query_builder extends CI_DB_driver {
 
 	/**

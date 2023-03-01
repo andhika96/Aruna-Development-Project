@@ -1,5 +1,7 @@
 <?php
 
+#[\AllowDynamicProperties]
+
 class ARUNA_Hello
 {
 	public function __construct()

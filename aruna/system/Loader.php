@@ -15,6 +15,8 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+#[\AllowDynamicProperties]
+
 class ARUNA_Loader {
 
 	// All these are set automatically. Don't mess with them.

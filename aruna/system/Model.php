@@ -1,5 +1,7 @@
 <?php
 
+#[\AllowDynamicProperties]
+
 class Aruna_Model
 {
 	public function __construct($group_db = 'default', $database_type = 'MySQL')

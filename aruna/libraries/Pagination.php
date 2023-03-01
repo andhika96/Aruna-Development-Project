@@ -12,6 +12,8 @@
 
 defined('MODULEPATH') OR exit('No direct script access allowed');
 
+#[\AllowDynamicProperties]
+
 class ARUNA_Pagination {
 
 	public $total;
