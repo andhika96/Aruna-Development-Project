@@ -26,6 +26,22 @@ class ARUNA_Router {
 	public $routes = array();
 
 	/**
+	 * Current class name
+	 *
+	 * @var	string
+	 */
+
+	public $class =		'';
+
+	/**
+	 * Current method name
+	 *
+	 * @var	string
+	 */
+
+	public $method =	'index';
+
+	/**
 	 * List of segments
 	 *
 	 * @var	array
@@ -104,10 +120,14 @@ class ARUNA_Router {
 			$segments[0] = 'home';
 		}
 
+		$this->set_class($segments[0]);
+
 		if ( ! isset($segments[1]))
 		{
 			$segments[1] = 'index';
 		}
+
+		$this->set_method($segments[1]);
 
 		$this->uri->rsegments = $segments;
 	}
@@ -195,6 +215,62 @@ class ARUNA_Router {
 		// If we got this far it means we didn't encounter a
 		// matching route so we'll set the site default route
 		$this->_set_request(array_values($this->uri->segments));
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Set class name
+	 *
+	 * @param	string	$class	Class name
+	 * @return	void
+	 */
+
+	public function set_class($class)
+	{
+		$this->class = str_replace(array('/', '.'), '', $class);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Fetch the current class
+	 *
+	 * @deprecated	3.0.0	Read the 'class' property instead
+	 * @return	string
+	 */
+
+	public function fetch_class()
+	{
+		return $this->class;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Set method name
+	 *
+	 * @param	string	$method	Method name
+	 * @return	void
+	 */
+
+	public function set_method($method)
+	{
+		$this->method = $method;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Fetch the current method
+	 *
+	 * @deprecated	3.0.0	Read the 'method' property instead
+	 * @return	string
+	 */
+	
+	public function fetch_method()
+	{
+		return $this->method;
 	}
 }
 

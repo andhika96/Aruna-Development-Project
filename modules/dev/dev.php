@@ -1,6 +1,6 @@
 <?php
 
-class home extends Aruna_Controller
+class dev extends Aruna_Controller
 {
 	public function __construct()
 	{
@@ -85,7 +85,9 @@ class home extends Aruna_Controller
 
 	public function test()
 	{
-		echo 'Kwkwkwkwkwk Land';
+		echo 'Kwkwkwkwkwk Land <br/>';
+
+		echo $this->router->fetch_class().'/'.$this->router->fetch_method();
 	}
 
 	public function detail($category, $id)
@@ -97,7 +99,7 @@ class home extends Aruna_Controller
 
 	public function asd()
 	{
-		phpinfo();
+		echo get_segment(0);
 	}
 }
 
