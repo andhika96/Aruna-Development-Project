@@ -208,7 +208,6 @@ class ARUNA_URI {
 	 *
 	 * @return	int
 	 */
-	
 	public function total_segments()
 	{
 		return count($this->segments);
@@ -221,7 +220,6 @@ class ARUNA_URI {
 	 *
 	 * @return	int
 	 */
-
 	public function total_rsegments()
 	{
 		return count($this->rsegments);
