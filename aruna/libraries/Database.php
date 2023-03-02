@@ -150,6 +150,7 @@ class ARUNA_Database {
 					$dbi = new PDO("mysql:host=$host;dbname=$db$get_charset", $user, $password);
 					$dbi->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					$dbi->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
+					// $dbi->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, TRUE);
 				}
 				catch (PDOExecption $e) 
 				{
@@ -585,10 +586,8 @@ class ARUNA_Database {
 
 	public function sql_fetch(&$res, $type = 'array')
 	{
-		if (is_countable($res) && count($res) > 0)
-		{
-			return $res;
-		}
+		// Set MYSQL_ATTR_USE_BUFFERED_QUERY to FALSE
+		$this->conn->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, FALSE);
 
 		switch ($type) 
 		{
