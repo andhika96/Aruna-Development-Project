@@ -601,7 +601,7 @@ class ARUNA_Database {
 					$i++;
 				}
 
-				return $this->result_fetch[0];
+				return array_shift($this->result_fetch);
 				break;
 
 			case "object":
