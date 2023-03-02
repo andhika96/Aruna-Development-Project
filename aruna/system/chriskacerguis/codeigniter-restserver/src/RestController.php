@@ -8,7 +8,7 @@ require APPPATH.'/vendor/firebase/php-jwt/src/BeforeValidException.php';
 require APPPATH.'/vendor/firebase/php-jwt/src/ExpiredException.php';
 require APPPATH.'/vendor/firebase/php-jwt/src/SignatureInvalidException.php';
 
-use \Firebase\JWT\JWT;
+use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 use Exception;

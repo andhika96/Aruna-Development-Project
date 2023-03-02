@@ -50,7 +50,4 @@
 
 	$route = array();
 
-	$route['hello'] = 'dev/test';
-	$route['hello2/(:any)/(:num)'] = 'home/detail/$1/$2';
-
 ?>

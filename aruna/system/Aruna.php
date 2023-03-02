@@ -247,6 +247,12 @@
 	// Load the base controller class
 	require_once BASEPATH.'system/Controller.php';
 
+	// Load the restFull API Library
+	// We load manually because we customize the library, so if you trying update the restFull API Library
+	// You can get the error and the API not work properly
+	require_once BASEPATH.'system/chriskacerguis/codeigniter-restserver/src/Format.php';
+	require_once BASEPATH.'system/chriskacerguis/codeigniter-restserver/src/RestController.php';
+
 	function &get_instance()
 	{
 		return Aruna_Controller::get_instance();

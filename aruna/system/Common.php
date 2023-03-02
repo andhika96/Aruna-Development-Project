@@ -1113,23 +1113,6 @@
 
 	// ------------------------------------------------------------------------
 
-	if ( ! function_exists('get_segment'))
-	{
-		function get_segment($val = 0)
-		{
-			if (FALSE === is_int($val)) 
-			{
-				show_error('setInteger expected Argument 1 to be Integer'); 
-			}
-
-			$GLOBALS['segments'][$val] = isset($GLOBALS['segments'][$val]) ? $GLOBALS['segments'][$val] : NULL;
-
-			return $GLOBALS['segments'][$val];
-		}
-	}
-
-	// ------------------------------------------------------------------------
-
 	if ( ! function_exists('section_header'))
 	{
 		/**

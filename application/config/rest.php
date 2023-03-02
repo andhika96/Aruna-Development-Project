@@ -360,7 +360,7 @@ $config['rest_keys_table'] = 'ml_keys';
 |
 */
 
-$config['rest_enable_keys'] = true;
+$config['rest_enable_keys'] = false;
 
 /*
 |--------------------------------------------------------------------------
@@ -680,3 +680,5 @@ $config['allowed_cors_origins'] = [];
 */
 
 $config['forced_cors_headers'] = [];
+
+?>
