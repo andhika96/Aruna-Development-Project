@@ -12,8 +12,6 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-#[\AllowDynamicProperties]
-
 class ARUNA_Database {
 
 	/**
@@ -97,13 +95,13 @@ class ARUNA_Database {
 
 	function __construct(string $active_group = '') 
 	{
-		if ( ! file_exists($file_path = APPPATH.'config/database.php')) 
+		if ( ! file_exists($file_path = BASEPATH.'config/database.php')) 
 		{
 			$this->display_error('The configuration file database.php does not exist.');
 		}
 
 		// Include Database Settings
-		include(APPPATH.'config/database.php');
+		include(BASEPATH.'config/database.php');
 
 		if ( ! isset($db) OR count($db) === 0) 
 		{
@@ -367,14 +365,27 @@ class ARUNA_Database {
 				{
 					foreach ($att as $key => &$value) 
 					{
-						if (is_int($value)) 
-						{
-							$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
-						}
-						else 
-						{
-	  						$stmt->bindParam(":".$key."", $value, PDO::PARAM_STR);
-	  					}
+						// if (is_array($value))
+						// {
+						// 	foreach ($value as $k => &$id) 
+						// 	{
+						// 		log_message('error', $key.' from array value');
+
+						// 		$stmt->bindParam(":".$key."", $id, PDO::PARAM_INT);
+						// 		// $stmt->bindValue(":".$key.$k."", $id, PDO::PARAM_INT);
+						// 	}
+						// }
+						// else
+						// {
+							if (is_int($value)) 
+							{
+								$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
+							}
+							else 
+							{
+		  						$stmt->bindParam(":".$key."", $value, PDO::PARAM_STR);
+		  					}
+		  				// }
 	  				}
 	  			}
 				else
@@ -531,6 +542,30 @@ class ARUNA_Database {
 		}
 	}
 
+	public function sql_result_all(&$res, $fetch_style = PDO::FETCH_ASSOC) 
+	{
+		switch ($this->dbtype) 
+		{
+			case "PDO_MySQL":
+				$row = $res->fetchAll($fetch_style);
+				return $row;
+				break;
+
+			case "PDO_SQLSRV":
+				$row = $res->fetchAll($fetch_style);
+				return $row;
+				break;
+
+			case "PDO_PostgreSQL":
+				$row = $res->fetchAll($fetch_style);
+				return $row;
+				break;
+		
+			default:
+				break;
+		}
+	}
+
 	/**
 	 * Fungsi ini berguna untuk mendapatkan dan menampilkan data dari database berupa array
 	 * namun untuk mengakses data array dari database harus dipecah terlebih dahulu menggunakan
@@ -559,13 +594,14 @@ class ARUNA_Database {
 		{
 			case "array":
 				$i = 0;
-				while ($row = $this->sql_result($res))
+				while ($row = $this->sql_result_all($res))
 				{
 					$this->result_fetch[$i] = $row;
+
 					$i++;
 				}
 
-				return $this->result_fetch;
+				return $this->result_fetch[0];
 				break;
 
 			case "object":
@@ -595,7 +631,7 @@ class ARUNA_Database {
 	 * 
 	 * echo $row['username'];
 	 * 
-	 * @return array
+	 * @return	array
 	 */
 
 	public function sql_fetch_single($res, $type = 'array')
@@ -613,20 +649,6 @@ class ARUNA_Database {
 			default;
 				break;
 		}
-	}
-
-	/**
-	 * Close database connection
-	 *
-	 * @return null
-	 */
-
-	public function sql_close()
-	{
-		// and now we're done; close it
-		$this->conn = null;
-
-		return $this->conn;
 	}
 
 	/**
@@ -1411,344 +1433,6 @@ class ARUNA_Database {
 		}
 	}
 
-	public function sql_update_batch($att, $table_name, $arg = 0, $batch_size = 100, $with_db_trans = FALSE) 
-	{
-		switch ($this->dbtype) 
-		{
-			case 'PDO_MySQL':
-				try 
-				{
-					if ($this->_is_already_active == TRUE && $with_db_trans == TRUE)
-					{
-						$this->display_error('You cannot use DB Transaction at the sametime.');
-					}
-
-					if ( ! $this->conn) 
-					{
-						$this->display_error('Cannot connect to MySQL Server, please check your connection database.');
-					}
-
-					$target = NULL;
-		
-					if (is_array($arg)) 
-					{
-						if ($this->array_equal($arg, $att))
-						{
-							$getres = array_intersect_key($arg, $att);
-
-							foreach ($getres as $key => $val) 
-							{
-								$keym = $key."2";
-								$target .= $target ? " and $key = :$keym" : "$key = :$keym";
-							}
-						}
-						else
-						{
-							foreach ($arg as $key => $val) 
-							{
-								$target .= $target ? " and $key = :$key" : "$key = :$key";
-							}
-						}
-					}
-
-					if ($with_db_trans == TRUE)
-					{
-						// From this point and until the transaction is being committed every change to the database can be reverted
-						$this->conn->beginTransaction(); 
-					}
-
-					$sql = "UPDATE $table_name SET ".$this->bindField_Update($att)." where $target";
-					$stmt = $this->conn->prepare($sql);
-
-					if (is_array($arg)) 
-					{
-						if ($this->array_equal($arg, $att))
-						{
-							$getres2 = array_intersect_key($arg, $att);
-
-							foreach ($getres2 as $key => &$value) 
-							{
-								$keym2 = $key."2";
-								
-								if (is_int($value)) 
-								{
-									$stmt->bindParam(":".$keym2."", $value, PDO::PARAM_INT);
-								}
-								else 
-								{
-									$stmt->bindParam(":".$keym2, $value, PDO::PARAM_STR);
-								}
-							}
-						}
-						else
-						{
-							foreach ($arg as $key => &$value) 
-							{
-								if (is_int($value)) 
-								{
-									$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
-								}
-								else 
-								{
-									$stmt->bindParam(":".$key, $value, PDO::PARAM_STR);
-								}
-							}
-						}
-					}
-					else
-					{	
-						$this->display_error('Your data must be an array.');
-					}
-
-					if (is_array($att)) 
-					{
-						foreach ($att as $key => &$value) 
-						{
-							if (is_int($value)) 
-							{
-								$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
-							}
-							else 
-							{
-								$stmt->bindParam(":".$key, $value, PDO::PARAM_STR);
-							}
-						}
-					}
-					else
-					{	
-						$this->display_error('Your data must be an array.');
-					}
-
-					$stmt->execute();
-
-					if ($with_db_trans == TRUE)
-					{
-						// Make the changes to the database permanent
-						$this->conn->commit();
-					}
-				}
-				catch (PDOExecption $e) 
-				{
-					if ($with_db_trans == TRUE)
-					{
-						// Failed to insert the order into the database so we rollback any changes
-						$this->conn->rollback();
-					}
-
-					$this->display_error($e->getMessage());
-				}
-				return $stmt;
-				break;
-
-			case 'PDO_SQLSRV':
-				try 
-				{
-					if ( ! $this->conn) 
-					{
-						$this->display_error('Cannot connect to Microsoft SQL Server, please check your connection database.');
-					}
-
-					$target = NULL;
-		
-					if (is_array($arg)) 
-					{
-						if ($this->array_equal($arg, $att))
-						{
-							$getres = array_intersect_key($arg, $att);
-
-							foreach ($getres as $key => $val) 
-							{
-								$keym = $key."2";
-								$target .= $target ? " and $key = :$keym" : "$key = :$keym";
-							}
-						}
-						else
-						{
-							foreach ($arg as $key => $val) 
-							{
-								$target .= $target ? " and $key = :$key" : "$key = :$key";
-							}
-						}
-					}
-
-					$sql = "UPDATE $table_name SET ".$this->bindField_Update($att)." where $target";
-					$stmt = $this->conn->prepare($sql);
-
-					if (is_array($arg)) 
-					{		
-						if ($this->array_equal($arg, $att))
-						{
-							$getres2 = array_intersect_key($arg, $att);
-
-							foreach ($getres2 as $key => &$value) 
-							{
-								$keym2 = $key."2";
-								
-								if (is_int($value)) 
-								{
-									$stmt->bindParam(":".$keym2."", $value, PDO::PARAM_INT);
-								}
-								else 
-								{
-									$stmt->bindParam(":".$keym2, $value, PDO::PARAM_STR);
-								}
-							}
-						}
-						else
-						{
-							foreach ($arg as $key => &$value) 
-							{
-								if (is_int($value)) 
-								{
-									$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
-								}
-								else 
-								{
-									$stmt->bindParam(":".$key, $value, PDO::PARAM_STR);
-								}
-							}
-						}
-					}
-					else
-					{	
-						$this->display_error('Your data must be an array.');
-					}
-
-					if (is_array($att)) 
-					{
-						foreach ($att as $key => &$value) 
-						{
-							if (is_int($value)) 
-							{
-								$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
-							}
-							else 
-							{
-								$stmt->bindParam(":".$key, $value, PDO::PARAM_STR);
-							}
-						}
-					}
-					else
-					{	
-						$this->display_error('Your data must be an array.');
-					}
-
-					$stmt->execute();
-				}
-				catch (PDOExecption $e) 
-				{
-					$this->display_error($e->getMessage());
-				}
-				return $stmt;
-				break;
-
-			case 'PDO_PostgreSQL':
-				try 
-				{
-					if ( ! $this->conn) 
-					{
-						$this->display_error('Cannot connect to PostgreSQL Server, please check your connection database.');
-					}
-
-					$target = NULL;
-		
-					if (is_array($arg)) 
-					{
-						if ($this->array_equal($arg, $att))
-						{
-							$getres = array_intersect_key($arg, $att);
-
-							foreach ($getres as $key => $val) 
-							{
-								$keym = $key."2";
-								$target .= $target ? " and $key = :$keym" : "$key = :$keym";
-							}
-						}
-						else
-						{
-							foreach ($arg as $key => $val) 
-							{
-								$target .= $target ? " and $key = :$key" : "$key = :$key";
-							}
-						}
-					}
-
-					$sql = "UPDATE $table_name SET ".$this->bindField_Update($att)." where $target";
-					$stmt = $this->conn->prepare($sql);
-
-					if (is_array($arg)) 
-					{		
-						if ($this->array_equal($arg, $att))
-						{
-							$getres2 = array_intersect_key($arg, $att);
-
-							foreach ($getres2 as $key => &$value) 
-							{
-								$keym2 = $key."2";
-								
-								if (is_int($value)) 
-								{
-									$stmt->bindParam(":".$keym2."", $value, PDO::PARAM_INT);
-								}
-								else 
-								{
-									$stmt->bindParam(":".$keym2, $value, PDO::PARAM_STR);
-								}
-							}
-						}
-						else
-						{
-							foreach ($arg as $key => &$value) 
-							{
-								if (is_int($value)) 
-								{
-									$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
-								}
-								else 
-								{
-									$stmt->bindParam(":".$key, $value, PDO::PARAM_STR);
-								}
-							}
-						}
-					}
-					else
-					{	
-						$this->display_error('Your data must be an array.');
-					}
-
-					if (is_array($att)) 
-					{
-						foreach ($att as $key => &$value) 
-						{
-							if (is_int($value)) 
-							{
-								$stmt->bindParam(":".$key."", $value, PDO::PARAM_INT);
-							}
-							else 
-							{
-								$stmt->bindParam(":".$key, $value, PDO::PARAM_STR);
-							}
-						}
-					}
-					else
-					{	
-						$this->display_error('Your data must be an array.');
-					}
-
-					$stmt->execute();
-				}
-				catch (PDOExecption $e) 
-				{
-					$this->display_error($e->getMessage());
-				}
-				return $stmt;
-				break;
-
-			default:
-				break;
-		}
-	}
-
 	public function sql_insert_batch(array $att, string $table_name, $batch_size = 100, $with_db_trans = FALSE) 
 	{
 		switch ($this->dbtype) 
@@ -2065,48 +1749,6 @@ class ARUNA_Database {
 		{
 			return false;
 		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Update_Batch statement
-	 *
-	 * Generates a platform-specific batch update string from the supplied data
-	 *
-	 * @param	string	$table	Table name
-	 * @param	array	$values	Update data
-	 * @param	string	$index	WHERE key
-	 * @return	string
-	 */
-	
-	protected function _update_batch($table, $values, $index)
-	{
-		$ids = array();
-		foreach ($values as $key => $val)
-		{
-			$ids[] = $val[$index]['value'];
-
-			foreach (array_keys($val) as $field)
-			{
-				if ($field !== $index)
-				{
-					$final[$val[$field]['field']][] = 'WHEN '.$val[$index]['field'].' = '.$val[$index]['value'].' THEN '.$val[$field]['value'];
-				}
-			}
-		}
-
-		$cases = '';
-		foreach ($final as $k => $v)
-		{
-			$cases .= $k." = CASE \n"
-				.implode("\n", $v)."\n"
-				.'ELSE '.$k.' END, ';
-		}
-
-		$this->where($val[$index]['field'].' IN('.implode(',', $ids).')', NULL, FALSE);
-
-		return 'UPDATE '.$table.' SET '.substr($cases, 0, -2).$this->_compile_wh('qb_where');
 	}
 
 	// --------------------------------------------------------------------
