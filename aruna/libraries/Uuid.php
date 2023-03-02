@@ -12,7 +12,7 @@
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include BASEPATH.'libraries/Uuid/vendor/autoload.php';
+include APPPATH.'vendor/autoload.php';
 
 use Ramsey\Uuid\Uuid;
 
