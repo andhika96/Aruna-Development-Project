@@ -606,13 +606,13 @@ class ARUNA_Database {
 
 			case "object":
 				$i = 0;
-				while ($row = $this->sql_result($res, PDO::FETCH_OBJ))
+				while ($row = $this->sql_result_all($res, PDO::FETCH_OBJ))
 				{
 					$this->result_fetch[$i] = $row;
 					$i++;
 				}
 
-				return $this->result_fetch;
+				return array_shift($this->result_fetch);
 				break;
 
 			default;
