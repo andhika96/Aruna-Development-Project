@@ -22,6 +22,16 @@
 
 	// Include Common Functions
 	require_once(BASEPATH.'system/Common.php');
+
+	// Include Common Functions custom by user
+	if (config_item('common_function') !== '')
+	{
+		if (file_exists(APPPATH.'common/function.php'))
+		{
+			require_once(APPPATH.'common/function.php');
+		}
+	}
+
 	/*
 	 * ------------------------------------------------------
 	 * Security procedures

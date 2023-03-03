@@ -1113,6 +1113,22 @@
 
 	// ------------------------------------------------------------------------
 
+	if ( ! function_exists('set_title'))
+	{
+		/**
+		 * Set title per page
+		 * @param string
+		 * @return string
+		 */
+
+		function set_title($title)
+		{
+			$GLOBALS['title'] = $title;
+		}
+	}
+
+	// ------------------------------------------------------------------------
+
 	if ( ! function_exists('section_header'))
 	{
 		/**

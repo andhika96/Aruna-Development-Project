@@ -95,13 +95,13 @@ class ARUNA_Database {
 
 	function __construct(string $active_group = '') 
 	{
-		if ( ! file_exists($file_path = BASEPATH.'config/database.php')) 
+		if ( ! file_exists($file_path = APPPATH.'config/database.php')) 
 		{
 			$this->display_error('The configuration file database.php does not exist.');
 		}
 
 		// Include Database Settings
-		include(BASEPATH.'config/database.php');
+		include(APPPATH.'config/database.php');
 
 		if ( ! isset($db) OR count($db) === 0) 
 		{
@@ -586,9 +586,6 @@ class ARUNA_Database {
 
 	public function sql_fetch(&$res, $type = 'array')
 	{
-		// Set MYSQL_ATTR_USE_BUFFERED_QUERY to FALSE
-		$this->conn->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, FALSE);
-
 		switch ($type) 
 		{
 			case "array":
