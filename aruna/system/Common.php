@@ -489,8 +489,8 @@
 
 			if (empty($_mimes))
 			{
-				$_mimes = file_exists(BASEPATH.'config/mimes.php')
-					? include(BASEPATH.'config/mimes.php')
+				$_mimes = file_exists(APPPATH.'config/mimes.php')
+					? include(APPPATH.'config/mimes.php')
 					: array();
 			}
 
