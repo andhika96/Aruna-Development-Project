@@ -15,9 +15,9 @@
 	 * ------------------------------------------------------
 	 */
 
-	if (file_exists(BASEPATH.'config/constants.php'))
+	if (file_exists(APPPATH.'config/constants.php'))
 	{
-		require_once(BASEPATH.'config/constants.php');
+		require_once(APPPATH.'config/constants.php');
 	}
 
 	// Include Common Functions

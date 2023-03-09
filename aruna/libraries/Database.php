@@ -673,13 +673,13 @@ class ARUNA_Database {
 
 				$res = $this->sql_prepare("select count(*) as $alias from $table where $target");
 				$bindParam = $this->sql_bindParam($params, $res);
-				$row = $this->sql_fetch($bindParam);
+				$row = $this->sql_fetch_single($bindParam);
 
 				return $row;
 			}
 			else
 			{
-				$res = $this->sql_prepare("select count(*) as $alias from $table", "select");
+				$res = $this->sql_select("select count(*) as $alias from $table");
 				$row = $this->sql_fetch($res);
 
 				return $row;

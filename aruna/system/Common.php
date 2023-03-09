@@ -1155,6 +1155,33 @@
 
 	// ------------------------------------------------------------------------
 
+	if ( ! function_exists('section_notice'))
+	{
+
+		/**
+		 * Set content data
+		 *
+		 * @var string $content
+		 * @return string
+		 */
+
+		function section_notice($content = FALSE)
+		{
+			$GLOBALS['section_notice'] = isset($GLOBALS['section_notice']) ? $GLOBALS['section_notice'] : NULL;
+
+			if ( ! strlen($content)) 
+			{
+				return $GLOBALS['section_notice'];
+			}
+			else 
+			{
+				$GLOBALS['section_notice'] .= $content;
+			}
+		}
+	}
+
+	// ------------------------------------------------------------------------
+
 	if ( ! function_exists('section_content'))
 	{
 
@@ -1227,6 +1254,15 @@
 			$GLOBALS['app_content'] = isset($GLOBALS['app_content']) ? $GLOBALS['app_content'] : NULL;
 
 			$output .= get_data_global('section_header');
+			
+			if ( ! empty(get_data_global('section_notice')))
+			{
+				$output .= get_data_global('section_notice');
+
+				// Clear all data in variable section_content
+				$GLOBALS['section_content'] = '';
+			}
+			
 			$output .= get_data_global('section_content');
 			$output .= get_data_global('section_footer');
 
@@ -1358,7 +1394,14 @@
 			$pagination = load_lib('pagination', $config['total_rows']);
 			$pagination->paras = site_url($config['base_url']);
 
-			return $pagination->whole_num_bar($config['style_class']);
+			if (isset($config['style_class']))
+			{
+				return $pagination->whole_num_bar($config['style_class']);
+			}
+			else
+			{
+				return $pagination->whole_num_bar();
+			}
 		}
 	}
 

@@ -39,10 +39,10 @@
 		function set_cookie($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = NULL, $httponly = NULL)
 		{
 			// Load Library Input
-			$input = load_lib('input');
+			$Aruna =& get_instance();
 			
 			// Set the config file options
-			$input->set_cookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
+			$Aruna->input->set_cookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
 		}
 	}
 
@@ -62,11 +62,11 @@
 		function get_cookie($index, $xss_clean = NULL)
 		{
 			// Load Library Input
-			$input = load_lib('input');
+			$Aruna =& get_instance();
 
 			is_bool($xss_clean) OR $xss_clean = (config_item('global_xss_filtering') === TRUE);
 			$prefix = isset($_COOKIE[$index]) ? '' : config_item('cookie_prefix');
-			return $input->cookie($prefix.$index, $xss_clean);
+			return $Aruna->input->cookie($prefix.$index, $xss_clean);
 		}
 	}
 
