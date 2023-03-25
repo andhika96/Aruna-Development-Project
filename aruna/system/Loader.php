@@ -663,9 +663,9 @@ class ARUNA_Loader {
 	 * @return	object|string
 	 */
 	
-	public function load_view($view, $vars = array(), $return = FALSE)
+	public function load_view($view, $vars = array(), $return = FALSE, $return_and_keep_for_section_content = FALSE)
 	{
-		return $this->_ar_load(array('_ar_view' => $view, '_ar_vars' => $this->_ar_prepare_view_vars($vars), '_ar_return' => $return));
+		return $this->_ar_load(array('_ar_view' => $view, '_ar_vars' => $this->_ar_prepare_view_vars($vars), '_ar_return' => $return, '_ar_return_and_keep_for_section_content' => $return_and_keep_for_section_content));
 	}
 
 	// --------------------------------------------------------------------
@@ -759,7 +759,7 @@ class ARUNA_Loader {
 	protected function _ar_load($_ar_data)
 	{
 		// Set the default data variables
-		foreach (array('_ar_view', '_ar_vars', '_ar_path', '_ar_return') as $_ar_val)
+		foreach (array('_ar_view', '_ar_vars', '_ar_path', '_ar_return', '_ar_return_and_keep_for_section_content') as $_ar_val)
 		{
 			$$_ar_val = isset($_ar_data[$_ar_val]) ? $_ar_data[$_ar_val] : FALSE;
 		}
@@ -841,8 +841,11 @@ class ARUNA_Loader {
 
 		$GLOBALS['section_content'] ??= '';
 
+		// Return the file data if requested but keep for using section_content
+		$GLOBALS['_ar_return_and_keep_for_section_content'] = $_ar_return_and_keep_for_section_content;
+
 		// Return the file data if requested
-		if ($_ar_return === TRUE)
+		if ($_ar_return === TRUE && $_ar_return_and_keep_for_section_content === FALSE)
 		{
 			$GLOBALS['_ar_return'] = TRUE;
 
@@ -872,7 +875,10 @@ class ARUNA_Loader {
 			@ob_end_clean();
 		}
 
-		return $this;
+		if ($_ar_return_and_keep_for_section_content === FALSE)
+		{
+			return $this;
+		}
 	}
 
 	// --------------------------------------------------------------------

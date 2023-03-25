@@ -361,11 +361,13 @@
 		 *
 		 * Berfungsi untuk memuat tampilan antarmuka kedua dari tampilan antarmuka utama
 		 * fungsi ini hanya berfungsi dengan sempurna jika diletakkan di modul
+		 * 
+		 * $return_and_keep_for_section_content berfungsi untuk dikembalikan sebagai data tanpa object untuk digunakan pada fungsi section_content()
 		 */
 
-		function view($view, $vars = array(), $return = FALSE)
+		function view($view, $vars = array(), $return = FALSE, $return_and_keep_for_section_content = FALSE)
 		{
-			$access_class = load_loader()->load_view($view, $vars, $return);
+			$access_class = load_loader()->load_view($view, $vars, $return, $return_and_keep_for_section_content);
 
 			return $access_class;
 		}
@@ -489,8 +491,8 @@
 
 			if (empty($_mimes))
 			{
-				$_mimes = file_exists(BASEPATH.'config/mimes.php')
-					? include(BASEPATH.'config/mimes.php')
+				$_mimes = file_exists(APPPATH.'config/mimes.php')
+					? include(APPPATH.'config/mimes.php')
 					: array();
 			}
 
@@ -1061,7 +1063,7 @@
 			echo $content;
 
 			// Return the file data if requested
-			if (get_data_global('_ar_return') === TRUE)
+			if (get_data_global('_ar_return') === TRUE && get_data_global('_ar_return_and_keep_for_section_content') === FALSE)
 			{
 				$buffer = ob_get_contents();
 				@ob_end_clean();
@@ -1090,7 +1092,7 @@
 			}
 
 			echo $buffer;
-			return;
+			// return;
 		}
 	}
 
@@ -1113,6 +1115,22 @@
 
 	// ------------------------------------------------------------------------
 
+	if ( ! function_exists('set_title'))
+	{
+		/**
+		 * Set title per page
+		 * @param string
+		 * @return string
+		 */
+
+		function set_title($title)
+		{
+			$GLOBALS['title'] = $title;
+		}
+	}
+
+	// ------------------------------------------------------------------------
+
 	if ( ! function_exists('section_header'))
 	{
 		/**
@@ -1126,13 +1144,40 @@
 		{
 			$GLOBALS['section_header'] = isset($GLOBALS['section_header']) ? $GLOBALS['section_header'] : NULL;
 
-			if ( ! strlen($content)) 
+			if ( ! strlen((string) $content)) 
 			{
 				return $GLOBALS['section_header'];
 			}
 			else 
 			{
 				$GLOBALS['section_header'] .= $content;
+			}
+		}
+	}
+
+	// ------------------------------------------------------------------------
+
+	if ( ! function_exists('section_notice'))
+	{
+
+		/**
+		 * Set content data
+		 *
+		 * @var string $content
+		 * @return string
+		 */
+
+		function section_notice($content = FALSE)
+		{
+			$GLOBALS['section_notice'] = isset($GLOBALS['section_notice']) ? $GLOBALS['section_notice'] : NULL;
+
+			if ( ! strlen((string) $content)) 
+			{
+				return $GLOBALS['section_notice'];
+			}
+			else 
+			{
+				$GLOBALS['section_notice'] .= $content;
 			}
 		}
 	}
@@ -1153,7 +1198,7 @@
 		{
 			$GLOBALS['section_content'] = isset($GLOBALS['section_content']) ? $GLOBALS['section_content'] : NULL;
 
-			if ( ! strlen($content)) 
+			if ( ! strlen((string) $content)) 
 			{
 				return $GLOBALS['section_content'];
 			}
@@ -1179,7 +1224,7 @@
 
 			$GLOBALS['section_footer'] = isset($GLOBALS['section_footer']) ? $GLOBALS['section_footer'] : NULL;
 
-			if ( ! strlen($content)) 
+			if ( ! strlen((string) $content)) 
 			{
 				return $GLOBALS['section_footer'];
 			}
@@ -1211,6 +1256,15 @@
 			$GLOBALS['app_content'] = isset($GLOBALS['app_content']) ? $GLOBALS['app_content'] : NULL;
 
 			$output .= get_data_global('section_header');
+			
+			if ( ! empty(get_data_global('section_notice')))
+			{
+				$output .= get_data_global('section_notice');
+
+				// Clear all data in variable section_content
+				$GLOBALS['section_content'] = '';
+			}
+			
 			$output .= get_data_global('section_content');
 			$output .= get_data_global('section_footer');
 
@@ -1342,7 +1396,14 @@
 			$pagination = load_lib('pagination', $config['total_rows']);
 			$pagination->paras = site_url($config['base_url']);
 
-			return $pagination->whole_num_bar($config['style_class']);
+			if (isset($config['style_class']))
+			{
+				return $pagination->whole_num_bar($config['style_class']);
+			}
+			else
+			{
+				return $pagination->whole_num_bar();
+			}
 		}
 	}
 

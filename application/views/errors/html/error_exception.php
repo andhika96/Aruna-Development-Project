@@ -144,11 +144,12 @@
 								foreach ($exception->getTrace() as $error)
 								{
 									echo '
+									<hr class="mb-3 mt-4" style="color: #000;background-color: #000">
 									<p class="mb-2">Error: '.$error['file'].'</p>
 									<p class="mb-2">Line: '.$error['line'].'</p>
 									<p class="mb-2">Function: '.$error['function'].'</p>
 									
-									<div class="source mt-4">
+									<div class="source">
 										'.highlightFile($error['file'], $error['line']).'
 									</div>';
 								}

@@ -15,13 +15,23 @@
 	 * ------------------------------------------------------
 	 */
 
-	if (file_exists(BASEPATH.'config/constants.php'))
+	if (file_exists(APPPATH.'config/constants.php'))
 	{
-		require_once(BASEPATH.'config/constants.php');
+		require_once(APPPATH.'config/constants.php');
 	}
 
 	// Include Common Functions
 	require_once(BASEPATH.'system/Common.php');
+
+	// Include Common Functions custom by user
+	if (config_item('common_function') !== '')
+	{
+		if (file_exists(APPPATH.'common/function.php'))
+		{
+			require_once(APPPATH.'common/function.php');
+		}
+	}
+
 	/*
 	 * ------------------------------------------------------
 	 * Security procedures
@@ -246,6 +256,12 @@
 
 	// Load the base controller class
 	require_once BASEPATH.'system/Controller.php';
+
+	// Load the restFull API Library
+	// We load manually because we customize the library, so if you trying update the restFull API Library
+	// You can get the error and the API not work properly
+	require_once BASEPATH.'system/chriskacerguis/codeigniter-restserver/src/Format.php';
+	require_once BASEPATH.'system/chriskacerguis/codeigniter-restserver/src/RestController.php';
 
 	function &get_instance()
 	{
