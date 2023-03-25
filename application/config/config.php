@@ -529,6 +529,7 @@
 	| Addon Setting for using database alternative
 	|
 	| Jika kamu menggunakan database_library_alternative maka untuk mengakses menggunakan variabel berikut
+	| Dan jika tidak digunakan bisa mengosongkan isi dari dari variabel tersebut
 	|	
 	| $this->db_alt->foo()
 	| 
@@ -541,6 +542,6 @@
 	*/
 
 	$config['database_library'] = 'Aruna';
-	$config['database_library_alternative'] = 'Codeigniter';
+	$config['database_library_alternative'] = ''; // You can set the value with Codeigniter
 
 ?>
