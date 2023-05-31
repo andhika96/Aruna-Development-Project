@@ -115,6 +115,51 @@ class ARUNA_Router {
 
 	protected function _set_request($segments = array())
 	{
+		if (config_item('main_page') !== '')
+		{
+			if ( ! isset($segments[0]))
+			{
+				if (strstr(config_item('main_page'), '/')) 
+				{
+					$var_str 	= preg_split("#/#", config_item('main_page'));
+					$class 		= $var_str[0];
+					$method 	= $var_str[1];
+
+					$segments[0] = $class;
+					$segments[1] = $method;
+				}
+				else 
+				{
+					$segments[0] = config_item('main_page');
+					$segments[1] = 'index';
+				}
+
+				$this->set_class($segments[0]);
+				$this->set_method($segments[1]);
+			}
+		}
+		else
+		{
+			if ( ! isset($segments[0]))
+			{
+				$segments[0] = 'home';
+			}
+
+			$this->set_class($segments[0]);
+
+			if ( ! isset($segments[1]))
+			{
+				$segments[1] = 'index';
+			}
+
+			$this->set_method($segments[1]);
+		}
+
+		$this->uri->rsegments = $segments;
+	}
+
+	protected function _set_request_old($segments = array())
+	{
 		if ( ! isset($segments[0]))
 		{
 			if (config_item('main_page') !== '')
@@ -136,6 +181,8 @@ class ARUNA_Router {
 			{
 				$segments[0] = 'home';
 			}
+
+			// $segments[0] = 'home';
 		}
 
 		$this->set_class($segments[0]);
@@ -161,6 +208,8 @@ class ARUNA_Router {
 			{
 				$segments[1] = 'index';
 			}
+
+			// $segments[1] = 'index';
 		}
 
 		$this->set_method($segments[1]);
