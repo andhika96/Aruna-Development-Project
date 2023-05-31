@@ -117,14 +117,50 @@ class ARUNA_Router {
 	{
 		if ( ! isset($segments[0]))
 		{
-			$segments[0] = 'home';
+			if (config_item('main_page') !== '')
+			{
+				if (strstr(config_item('main_page'), '/')) 
+				{
+					$var_str 	= preg_split("#/#", config_item('main_page'));
+					$class 		= $var_str[0];
+					$method 	= $var_str[1];
+
+					$segments[0] = $class;
+				}
+				else 
+				{
+					$segments[0] = config_item('main_page');
+				}
+			}
+			else
+			{
+				$segments[0] = 'home';
+			}
 		}
 
 		$this->set_class($segments[0]);
 
 		if ( ! isset($segments[1]))
 		{
-			$segments[1] = 'index';
+			if (config_item('main_page') !== '')
+			{
+				if (strstr(config_item('main_page'), '/')) 
+				{
+					$var_str 	= preg_split("#/#", config_item('main_page'));
+					$class 		= $var_str[0];
+					$method 	= $var_str[1];
+
+					$segments[1] = $method;
+				}
+				else 
+				{
+					$segments[1] = 'index';
+				}
+			}
+			else
+			{
+				$segments[1] = 'index';
+			}
 		}
 
 		$this->set_method($segments[1]);

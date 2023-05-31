@@ -282,32 +282,6 @@
 		$URI->segments[$i] = isset($URI->segments[$i]) ? $URI->segments[$i] : NULL;
 	}
 
-	if (empty($URI->segments[0]) && empty($URI->segments[1]))
-	{
-		if (config_item('main_page') !== '')
-		{
-			if (strstr(config_item('main_page'), '/')) 
-			{
-				$var_str 	= preg_split("#/#", config_item('main_page'));
-				$class 		= $var_str[0];
-				$method 	= $var_str[1];
-			}
-			else 
-			{
-				$class 		= config_item('main_page');
-				$method 	= 'index';
-			}
-		}
-		else
-		{
-			$class = 'home';
-			$method = 'index';
-		}
-
-		$URI->segments[0] = $class;
-		$URI->segments[1] = $method;
-	}
-
 	// Register the parr variable into global variables to make it easier for developers
 	// For parr variables are global segments, you can use the get_data_global function to use this method
 	$GLOBALS['segments'] = $URI->segments;
