@@ -7,7 +7,7 @@
 
 			<!-- Optional JavaScript -->
 			<!-- jQuery first, then Popper.js, then Bootstrap JS, and other -->
-			<script src="'.base_url('assets/js/jquery-3.5.1.min.js').'"></script>
+			<script src="'.base_url('assets/js/jquery-3.7.0.min.js').'"></script>
 			<script src="'.base_url('assets/js/jquery-ui-1.12.1.min.js').'"></script>
 			<script src="'.base_url('assets/js/popper.min.js').'"></script>
 			<script src="'.base_url('assets/plugins/bootstrap/4.4.1/js/bootstrap.min.js').'"></script>

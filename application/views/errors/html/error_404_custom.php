@@ -60,7 +60,7 @@
 
 			<!-- Optional JavaScript -->
 			<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-			<script src="'.base_url('assets/js/jquery-3.6.0.slim.min.js').'"></script>
+			<script src="'.base_url('assets/js/jquery-3.7.0.slim.min.js').'"></script>
 			<script src="'.base_url('assets/plugins/bootstrap/4.6.0/js/bootstrap.bundle.min.js').'"></script>
 			<script src="'.base_url('assets/plugins/fontawesome/5.15.1/js/all.min.js').'"></script>
 		</body>

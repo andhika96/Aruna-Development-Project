@@ -30,7 +30,7 @@
 	display_application_footer('
 			<!-- Optional JavaScript -->
 			<!-- jQuery first, then Popper.js, then Bootstrap JS, and other -->
-			<script src="'.base_url('assets/js/jquery-3.6.0.min.js').'"></script>
+			<script src="'.base_url('assets/js/jquery-3.7.0.min.js').'"></script>
 			<script src="'.base_url('assets/plugins/bootstrap/5.1.3/js/bootstrap.bundle.min.js').'"></script>
 			<script src="'.base_url('assets/plugins/fontawesome/5.15.1/js/all.min.js').'"></script>
 		</body>
