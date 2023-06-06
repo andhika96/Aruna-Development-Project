@@ -839,7 +839,7 @@ class ARUNA_Loader {
 
 		log_message('info', 'File loaded: '.$_ar_path);
 
-		$GLOBALS['section_content'] ??= '';
+		$GLOBALS['section_content_alternative'] ??= '';
 
 		// Return the file data if requested but keep for using section_content
 		$GLOBALS['_ar_return_and_keep_for_section_content'] = $_ar_return_and_keep_for_section_content;
@@ -871,8 +871,12 @@ class ARUNA_Loader {
 		}
 		else
 		{			
-			$GLOBALS['section_content'] .= ob_get_contents();
+			$buffer .= ob_get_contents();
 			@ob_end_clean();
+
+			$GLOBALS['section_content_alternative'] = $buffer;
+
+			return $buffer;
 		}
 
 		if ($_ar_return_and_keep_for_section_content === FALSE)

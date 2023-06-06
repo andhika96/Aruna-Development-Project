@@ -1092,7 +1092,6 @@
 			}
 
 			echo $buffer;
-			// return;
 		}
 	}
 
