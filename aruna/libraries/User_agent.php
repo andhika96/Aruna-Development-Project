@@ -179,9 +179,9 @@ class ARUNA_User_agent {
 	
 	protected function _load_agent_file()
 	{
-		if (($found = file_exists(BASEPATH.'config/user_agents.php')))
+		if (($found = file_exists(APPPATH.'config/user_agents.php')))
 		{
-			include(BASEPATH.'config/user_agents.php');
+			include(APPPATH.'config/user_agents.php');
 		}
 
 		$return = FALSE;
