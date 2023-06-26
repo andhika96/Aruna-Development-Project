@@ -839,6 +839,8 @@ class ARUNA_Loader {
 
 		log_message('info', 'File loaded: '.$_ar_path);
 
+		$buffer = '';
+
 		$GLOBALS['section_content_alternative'] ??= '';
 
 		// Return the file data if requested but keep for using section_content
